@@ -6,7 +6,13 @@ from django.utils import timezone
 from django.http import HttpResponseRedirect
 import datetime
 
+from viewsets import ModelViewSet
 from .models import Stage, Company, Contact, Campaign, Opportunity, Reminder, Report, CallLog, OpportunityStage
+
+class StageViewSet(ModelViewSet):
+    model = Stage
+    fields = ['name', 'order', 'descripton', 'value']
+    success_url = reverse_lazy('crm:stage_list')
 
 class Company(ListView):
     model = Company

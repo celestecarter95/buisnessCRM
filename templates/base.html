@@ -8,13 +8,18 @@
     <title>{% block title %}Starter Template for Bootstrap{% endblock %}</title>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <!-- Custom Css -->
+      {% load staticfiles %}
+      <link rel="stylesheet" type="text/css" href="{% static 'crm/styles.css' %}">
+
 
   </head>
 
@@ -35,27 +40,27 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
             <li><a href="{% url 'crm:stage_index' %}">Stages</a></li>
-            <li><a href="{% url 'crm:company' %}">Company</a></li>
+            <li><a href="{% url 'crm:company_index' %}">Company</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           {% if request.user.is_authenticated %}
-            <li><a href="{% url 'auth_logout' %}"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
+            <li><a href="{% url 'auth_logout' %}"> Log Out</a></li>
           {% else %}
-            <li><a href="{% url 'registration_register' %}"><span class="glyphicon glyphicon-edit"></span> Create Account</a></li>
-            <li><a href="{% url 'auth_login' %}"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+            <li><a href="{% url 'registration_register' %}"> Create Account</a></li>
+            <li><a href="{% url 'auth_login' %}"> Log In</a></li>
           {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-    {% block content %}
     <div class="container">
+    {% block content %}
 
-    </div><!-- /.container -->
     {% endblock %}
+    </div><!-- /.container -->
 
 
   </body>

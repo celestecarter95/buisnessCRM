@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+<form class="form" action="." method="POST">
+  {% csrf_token %}
+  {{ form }}
+  <button class="btn btn-primary">{% if stage %}Update{% else %}Create{% endif %}</button>
+</form>
+
+{% endblock %}
