@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Reminders{% endblock %}
+
+{% block content %}
+  <a class="btn btn-success" style="margin-bottom:20px;" href="{% url 'crm:reminder_create' %}">Create a New Reminder</a>
+
+  <div class="list-group">
+    <a href="#" class="list-group-item active">
+     Reminders
+    </a>
+    {% for reminder in reminder_list %}
+    <a class="list-group-item" href="{% url 'crm:reminder_detail' reminder.id %}">{{ reminder}}<span style="text-align:right; float:right;">Completed: {{ reminder.completed }}</span></a>
+    {% endfor %}
+  </div>
+
+{% endblock %}

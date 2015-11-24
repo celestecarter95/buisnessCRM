@@ -1,9 +1,30 @@
 {% extends 'base.html' %}
 
-{% block title %}{% endblock %}
+{% block title %}Stage {{ stage.name }}{% endblock %}
 
 {% block content %}
 
-hello world
+  <table class="table table-striped">
+    <thead>
+      <tr class="success">
+        <th>#Order</th>
+        <th>Phase</th>
+        <th>Description</th>
+        <th>Value</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>#{{ stage.order }}</td>
+        <td>{{ stage.name }}</td>
+        <td>{{ stage.description }}</td>
+        <td>{{ stage.value }}</td>
+        <td><a class="btn btn-warning" href="{% url 'crm:stage_update' stage.id %}">Edit</a></td>
+        <td><a class="btn btn-danger" href="{% url 'crm:stage_delete' stage.id %}">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
 
 {% endblock %}

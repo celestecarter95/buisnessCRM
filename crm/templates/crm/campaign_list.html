@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Campaigns{% endblock %}
+
+{% block content %}
+  <a class="btn btn-success" style="margin-bottom:20px;" href="{% url 'crm:campaign_create' %}">Create a New Reminder</a>
+
+  <div class="list-group">
+    <a href="#" class="list-group-item active">
+     Campaigns
+    </a>
+    {% for campaign in campaign_list %}
+    <a class="list-group-item" href="{% url 'crm:campaign_detail' campaign.id %}">{{ campaign }}</a>
+    {% endfor %}
+  </div>
+
+{% endblock %}

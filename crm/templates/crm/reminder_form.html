@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
 
-{% block title %}{% if stage %}Upate Stage {{ stage.name }} {% else %} Create a New Stage {% endif %}{% endblock %}
+{% block title %}{% if reminder %}Upate Reminder {{ reminder.name }} {% else %} Create a New Reminder {% endif %}{% endblock %}
 
 {% block content %}
 
@@ -9,7 +9,7 @@
   <form class="form-horizontal" action="." method="post" role="form">
     {% csrf_token %}
     <fieldset>
-      <legend class="col-lg-offset-1">{% if stage %}Upate Stage {{ stage.name }} {% else %} Create a New Stage {% endif %}</legend>
+      <legend class="col-lg-offset-1">{% if reminder %}Upate Reminder {{ reminder.name }} {% else %} Create a New Reminder {% endif %}</legend>
     {% for field in form %}
     <div class="form-group">
       <div class="col-lg-2 control-label">
@@ -21,7 +21,7 @@
       </div>
     </div>
     {% endfor %}
-    <button class="col-lg-offset-10 col-lg-2 btn btn-primary">{% if stage %}Upate {% else %} Create {% endif %}</button>
+    <button class="col-lg-offset-10 col-lg-2 btn btn-primary">{% if reminder %}Upate {% else %} Create {% endif %}</button>
     </fieldset>
   </form>
 </div>

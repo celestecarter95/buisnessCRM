@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 import datetime
 
 class Stage(models.Model):
@@ -10,6 +11,9 @@ class Stage(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('crm:stage_index')
 
 class Company(models.Model):
     name = models.CharField(max_length=200)
@@ -51,23 +55,30 @@ class Campaign(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
 
+    def __unicode__(self):
+        return self.name
+
 class Opportunity(models.Model):
     stage = models.ForeignKey(Stage)
     company = models.ForeignKey(Company, blank=True, null=True)
     contact = models.ForeignKey(Contact)
     value = models.FloatField(help_text="How much this opportunity is worth to the organization")
-    sourse = models.ForeignKey(Campaign, help_text="How did this contact find out about this?")
-    user = models.ForeignKey(User)
+    source = models.ForeignKey(Campaign, help_text="How did this contact find out about this?")
+    user = models.ForeignKey(User, blank=True, null=True)
     create_date = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         if self.company:
-            return self.company
+            return '%s' % (self.company)
         else:
-            return self.contact
+            return '%s' % (self.contact)
+
+    def get_absolute_url(self):
+        return reverse('crm:opportuny_index')
 
     class Meta:
         verbose_name_plural = "opportunities"
+
 
 class Reminder(models.Model):
     opportunity = models.ForeignKey(Opportunity)
@@ -76,7 +87,7 @@ class Reminder(models.Model):
     completed = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return self.opportunity + ": " + self.note
+        return "%s: %s" % (self.opportunity, self.note)
 
 class Report(models.Model):
     name = models.CharField(max_length=200)
@@ -92,7 +103,11 @@ class CallLog(models.Model):
     user = models.ForeignKey(User)
 
     def __unicode__(self):
-        return self.opportunity + " on " + self.date.strftime("%Y-%m-%d") + " by " + self.user.get_full_name()
+        if self.user.get_full_name():
+            return "%s on %s by %s" % (self.opportunity, self.date.strftime("%Y-%m-%d"), self.user.get_full_name())
+        else:
+            return "%s on %s by %s" % (self.opportunity, self.date.strftime("%Y-%m-%d"), self.user)
+
 
 class OpportunityStage(models.Model):
     opportunity = models.ForeignKey(Opportunity)
@@ -101,4 +116,4 @@ class OpportunityStage(models.Model):
     user = models.ForeignKey(User)
 
     def __unicode__(self):
-        return self.opportunity + " moved to " + self.stage
+        return "%s moved to %s" % (self.opportunity, self.stage)

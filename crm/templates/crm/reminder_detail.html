@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Reminder {{ reminder.name }}{% endblock %}
+
+{% block content %}
+
+  <table class="table table-striped">
+    <thead>
+      <tr class="success">
+        <th>Opportunity</th>
+        <th>Date</th>
+        <th>Note</th>
+        <th>Completed</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>#{{ reminder.opportunity }}</td>
+        <td>{{ reminder.date }}</td>
+        <td>{{ reminder.note }}</td>
+        <td>{{ reminder.completed }}</td>
+        <td><a class="btn btn-warning" href="{% url 'crm:reminder_update' reminder.id %}">Edit</a></td>
+        <td><a class="btn btn-danger" href="{% url 'crm:reminder_delete' reminder.id %}">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+{% endblock %}

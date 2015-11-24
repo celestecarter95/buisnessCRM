@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% load widget_tweaks %}
+{% load crm_extras %}
 
-{% block title %}{% if stage %}Upate Stage {{ stage.name }} {% else %} Create a New Stage {% endif %}{% endblock %}
+{% block title %}{% if stage %}Upate Stage {{ stage.name }} {% else %} Create a New Call Log{% endif %}{% endblock %}
 
 {% block content %}
+
+{{ stage|to_class_name }}
+{{ calllog|to_class_name }}
 
 <div class="well bs-component">
   <form class="form-horizontal" action="." method="post" role="form">

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Opportunity {{ opportunity.name }}{% endblock %}
+
+{% block content %}
+
+  <table class="table table-striped">
+    <thead>
+      <tr class="success">
+        <th>Stage</th>
+        <th>Company</th>
+        <th>Contact</th>
+        <th>Value</th>
+        <th>Source</th>
+        <th>User</th>
+        <th>Create Date</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ opportunity.stage }}</td>
+        <td>{{ opportunity.company }}</td>
+        <td>{{ opportunity.contact }}</td>
+        <td>{{ opportunity.value }}</td>
+        <td>{{ opportunity.source }}</td>
+        <td>{{ opportunity.user }}</td>
+        <td>{{ opportunity.create_date }}</td>
+        <td><a class="btn btn-warning" href="{% url 'crm:opportunity_update' opportunity.id %}">Edit</a></td>
+        <td><a class="btn btn-danger" href="{% url 'crm:opportunity_delete' opportunity.id %}">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+{% endblock %}

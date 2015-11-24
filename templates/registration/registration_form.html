@@ -1,11 +1,26 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 {% load i18n %}
 
 {% block content %}
-<form method="post" action=".">
-  {% csrf_token %}
-  {{ form.as_p }}
+<div class="well bs-component">
+  <form class="form-horizontal" method="post" action=".">
+    {% csrf_token %}
+      <fieldset>
+      {% for field in form %}
+      <div class="form-group">
+        <div class="col-lg-2 control-label">
+          {{ field.label_tag }}
+        </div>
+        <div class="col-lg-10">
+          {% render_field field class+="form-control" %}
+          <span class="text-success helper-block">{{ field.help_text }}</span>
+        </div>
+      </div>
+      {% endfor %}
+        <input  class="col-lg-offset-10 col-lg-2 btn btn-success" type="submit" value="{% trans 'Submit' %}" />
+      </fieldset>
 
-  <input type="submit" value="{% trans 'Submit' %}" />
-</form>
+  </form>
+</div>
 {% endblock %}

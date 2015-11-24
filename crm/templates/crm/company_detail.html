@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Company {{ company.name }}{% endblock %}
+
+{% block content %}
+
+  <table class="table table-striped">
+    <thead>
+      <tr class="success">
+        <th>Name</th>
+        <th>Website</th>
+        <th>Address 1</th>
+        <th>Address 2</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zipcode</th>
+        <th>Country</th>
+        <th>Phone</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ company.name }}</td>
+        <td>{{ company.website }}</td>
+        <td>{{ company.address1 }}</td>
+        <td>{{ company.address2 }}</td>
+        <td>{{ company.city }}</td>
+        <td>{{ company.state }}</td>
+        <td>{{ company.zipcode }}</td>
+        <td>{{ company.country }}</td>
+        <td>{{ company.phone }}</td>
+        <td><a class="btn btn-warning" href="{% url 'crm:company_update' company.id %}">Edit</a></td>
+        <td><a class="btn btn-danger" href="{% url 'crm:company_delete' company.id %}">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+{% endblock %}

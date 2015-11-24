@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}Company{% endblock %}
-
-hello world
+{% block title %}Companies{% endblock %}
 
 {% block content %}
+  <a class="btn btn-success" style="margin-bottom:20px;" href="{% url 'crm:company_create' %}">Create a New Company</a>
 
-company
+  <div class="list-group">
+    <a href="#" class="list-group-item active">
+      Companies
+    </a>
+    {% for company in company_list %}
+      <a class="list-group-item" href="{% url 'crm:company_detail' company.id %}">{{ company.name }}</a>
+    {% endfor %}
+  </div>
 
 {% endblock %}

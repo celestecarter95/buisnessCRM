@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Call Log {{ calllog.name }}{% endblock %}
+
+{% block content %}
+
+  <table class="table table-striped">
+    <thead>
+      <tr class="success">
+        <th>Opportunity</th>
+        <th>Date</th>
+        <th>Note</th>
+        <th>User</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ calllog.opportunity }}</td>
+        <td>{{ calllog.date }}</td>
+        <td>{{ calllog.note }}</td>
+        <td>{{ calllog.user }}</td>
+        <td><a class="btn btn-warning" href="{% url 'crm:calllog_update' calllog.id %}">Edit</a></td>
+        <td><a class="btn btn-danger" href="{% url 'crm:calllog_delete' calllog.id %}">Delete</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+{% endblock %}
