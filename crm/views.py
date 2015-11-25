@@ -10,7 +10,7 @@ from viewsets import ModelViewSet
 from .models import Stage, Company, Contact, Campaign, Opportunity, Reminder, Report, CallLog, OpportunityStage
 
 class Dashboard(ListView):
-    model = Opportunity
+    model = OpportunityStage
     template_name = "crm/dashboard.html"
 
     def get_context_data(self, **kwargs):
@@ -20,6 +20,7 @@ class Dashboard(ListView):
         context["opportunity_stages"] = OpportunityStage.objects.all().order_by('-time_stamp')
         context["reminders"] = Reminder.objects.all().order_by('-date')[:6]
         context["opp_users"] = User.objects.annotate(num_opp=Count('opportunitystage'))
+        context["stage_by_opp"] = Stage.objects.annotate(opp_count = Count('opportunity'))
 
         return context
 

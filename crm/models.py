@@ -62,7 +62,7 @@ class Opportunity(models.Model):
     stage = models.ForeignKey(Stage)
     company = models.ForeignKey(Company, blank=True, null=True)
     contact = models.ForeignKey(Contact)
-    value = models.FloatField(help_text="How much this opportunity is worth to the organization")
+    value = models.DecimalField(help_text="How much this opportunity is worth to the organization", max_digits=10, decimal_places=2)
     source = models.ForeignKey(Campaign, help_text="How did this contact find out about this?")
     user = models.ForeignKey(User, blank=True, null=True)
     create_date = models.DateTimeField(auto_now_add=True)

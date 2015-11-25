@@ -9,8 +9,8 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['User', 'Opportunities Closed'],
-          {% for user in opp_users %}
-          ['{% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user }}{% endif %}', {{ user.num_opp }}],
+          {% for stage in stage_by_opp %}
+          ['{{ stage.name }}', {{ stage.opp_count }}],
           {% endfor %}
         ]);
         var options = {
@@ -49,9 +49,6 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Upcoming Reminders
-                        <span class="text-right pull-right">
-                            <a href="#" class="btn btn-primary btn-sm mdi-action-list" style="margin-top: -7px;" title="List all Opportunities"></a>
-                        </span>
                 </div>
                 <div class="panel-body">
                 <table class="table">
@@ -78,9 +75,6 @@
             <div class="panel panel-info">
                 <div class="panel-heading">
                     Newest Opportunities
-                        <span class="text-right pull-right">
-                            <a href="#" class="btn btn-info btn-sm mdi-action-list" style="margin-top: -7px;" title="List all Opportunities"></a>
-                        </span>
                 </div>
                 <div class="panel-body">
                 <table class="table">
@@ -95,7 +89,7 @@
                         <td><a href="{% url 'crm:opportunity_detail' opp.opportunity.id %}" class="text-info">{{ opp.opportunity.company }}</a></td>
                         <td>{{ opp.stage }}</td>
                         {% localize on %}
-                        <td>${{ opp.opportunity.value|floatformat }}</td>
+                        <td>${{ opp.opportunity.value|localize }}</td>
                         {% endlocalize %}
                         <td>{{ opp.time_stamp|date:"j M Y" }}</td>
                     </tr>
@@ -110,12 +104,9 @@
     </div>
     <div class="row">
         <div class="col-lg-6">
-            <div class="panel panel-primary">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     Opportunities By Stage
-                        <span class="text-right pull-right">
-                            <a href="#" class="btn btn-primary btn-sm mdi-action-list" style="margin-top: -7px;" title="List all Opportunities"></a>
-                        </span>
                 </div>
                 <div class="panel-body">
                     <div id="piechart" style="width:500px; height: 400px; color:white;"></div>
@@ -126,9 +117,6 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Top Producers
-                        <span class="text-right pull-right">
-                            <a href="#" class="btn btn-primary btn-sm mdi-action-list" style="margin-top: -7px;" title="List all Opportunities"></a>
-                        </span>
                 </div>
                 <div class="panel-body">
                     <table class="table">
