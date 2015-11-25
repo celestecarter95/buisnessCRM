@@ -105,7 +105,7 @@
                     {% endfor %}
                 </table>
                         <div class="pull-right">
-                        <a href="{% url 'crm:reminder_create' %}" class="btn btn-success btn-circle glyphicon glyphicon-plus" title="Create New Reminder"></a>
+                        <a href="{% url 'crm:opportunity_create' %}" class="btn btn-success btn-circle glyphicon glyphicon-plus" title="Create New Reminder"></a>
                         </div>
                 </div>
             </div>
@@ -139,6 +139,12 @@
                         <th>Name</th>
                         <th>Opportunities Closed</th>
                     </tr>
+                    {% for user in users %}
+                    <tr>
+                      <td>{% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user }}{% endif %}</td>
+                      <td>{{ user.opportunitystage_set}}</td>
+                    </tr>
+                    {% endfor %}
                     <tr>
                         <td>John Doe</td>
                         <td>28</td>

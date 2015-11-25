@@ -33,6 +33,8 @@ urlpatterns = [
     url(r'^opportunties/(?P<pk>\d+)/update/$', login_required(views.UpdateOpportunity.as_view()), name="opportunity_update"),
     url(r'^opportunties/(?P<pk>\d+)/delete/$', login_required(views.DeleteOpportunity.as_view()), name="opportunity_delete"),
 
+    url(r'^opportuntystages/(?P<pk>\d+)/$', login_required(views.OpportunityStageDetail.as_view()), name="opportunitystage_detail"),
+
     url(r'^reminders/$', login_required(views.ReminderList.as_view()), name='reminder_list'),
     url(r'^reminders/(?P<pk>\d+)/$', login_required(views.ReminderDetail.as_view()), name="reminder_detail"),
     url(r'^reminders/create/$', login_required(views.CreateReminder.as_view()), name='reminder_create'),

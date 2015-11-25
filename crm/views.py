@@ -3,6 +3,7 @@ from django.views.generic import FormView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.models import User
+from django.db.models import Count
 import datetime
 
 from viewsets import ModelViewSet
@@ -18,8 +19,12 @@ class Dashboard(ListView):
         #Adding OpportunityStages to the templates' context
         context["opportunity_stages"] = OpportunityStage.objects.all().order_by('-time_stamp')
         context["reminders"] = Reminder.objects.all().order_by('-date')[:6]
-        #print User.objects.all()
-        #context["users"] = User.objects.all()
+        User.objects.all()
+        context["users"] = User.objects.all()
+        opp = OpportunityStage.objects.annotate(num_opp=Count('user')).order_by('num_opp')[:6]
+        print opp
+        print opp[0].num_opp
+        context["opp_users"] = OpportunityStage.objects.annotate(num_opp=Count('user')).order_by('-num_opp')[:6]
 
         return context
 
@@ -132,6 +137,9 @@ class UpdateOpportunity(UpdateView):
 class DeleteOpportunity(DeleteView):
     model = Opportunity
     success_url = reverse_lazy('crm:opportunity_list')
+
+class OpportunityStageDetail(DetailView):
+    model = OpportunityStage
 
 #class OpportunityViewSet(ModelViewSet):
 #    model = Opportunity
