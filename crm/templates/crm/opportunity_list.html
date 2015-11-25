@@ -20,7 +20,7 @@
       Successful Opportunities
     </a>
     {% for opps in opportunity_stages %}
-    <p class="list-group-item">{{ opps }}<span style="float:right;">{{ opps.time_stamp }}</span></p>
+    <a class="list-group-item" href="{% url 'crm:opportunitystage_detail' opps.id  %}">{{ opps }}<span style="float:right;">{{ opps.time_stamp }}</span></a>
     {% endfor %}
   </div>
 </div>

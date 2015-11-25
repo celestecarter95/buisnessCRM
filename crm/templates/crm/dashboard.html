@@ -9,12 +9,9 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['User', 'Opportunities Closed'],
-          ['Play', 20],
-          ['Work',     11],
-          ['Eat',      2],
-          ['Commute',  2],
-          ['Watch TV', 2],
-          ['Sleep',    7]
+          {% for user in opp_users %}
+          ['{% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user }}{% endif %}', {{ user.num_opp }}],
+          {% endfor %}
         ]);
         var options = {
           // title: 'My Daily Activities'
@@ -139,24 +136,12 @@
                         <th>Name</th>
                         <th>Opportunities Closed</th>
                     </tr>
-                    {% for user in users %}
+                    {% for user in opp_users %}
                     <tr>
-                      <td>{% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user }}{% endif %}</td>
-                      <td>{{ user.opportunitystage_set}}</td>
+                        <td>{% if user.get_full_name %}{{ user.get_full_name }}{% else %}{{ user }}{% endif %}</td>
+                        <td>{{ user.num_opp }}</td>
                     </tr>
                     {% endfor %}
-                    <tr>
-                        <td>John Doe</td>
-                        <td>28</td>
-                    </tr>
-                    <tr>
-                        <td>Jane Doe</td>
-                        <td>27</td>
-                    </tr>
-                    <tr>
-                        <td>Johnny Smith</td>
-                        <td>14</td>
-                    </tr>
                     </table>
                 </div>
             </div>

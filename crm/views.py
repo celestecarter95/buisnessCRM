@@ -19,12 +19,7 @@ class Dashboard(ListView):
         #Adding OpportunityStages to the templates' context
         context["opportunity_stages"] = OpportunityStage.objects.all().order_by('-time_stamp')
         context["reminders"] = Reminder.objects.all().order_by('-date')[:6]
-        User.objects.all()
-        context["users"] = User.objects.all()
-        opp = OpportunityStage.objects.annotate(num_opp=Count('user')).order_by('num_opp')[:6]
-        print opp
-        print opp[0].num_opp
-        context["opp_users"] = OpportunityStage.objects.annotate(num_opp=Count('user')).order_by('-num_opp')[:6]
+        context["opp_users"] = User.objects.annotate(num_opp=Count('opportunitystage'))
 
         return context
 
