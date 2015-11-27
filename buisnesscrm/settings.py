@@ -79,10 +79,20 @@ WSGI_APPLICATION = 'buisnesscrm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'buisnesscrm',
+	'USER': 'celestecarter95',
+	'PASSWORD': 'raspWakeup5',
+	'HOST': 'localhost',
     }
 }
 
@@ -108,6 +118,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+SITE_ID = 1
 
 LOGIN_REDIRECT_URL = "/"
 
