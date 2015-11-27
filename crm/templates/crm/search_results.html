@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load crm_extras %}
+
+{% block title %}Searching {{ query_string }}{% endblock %}
+
+{% block content %}
+
+{% if search %}
+<h1 class="well">Your search reasults <span class="text-warning">"{{ search }}"</span> was found in the following.</h1>
+{% endif %}
+
+{% if contacts %}
+<div class="alert alert-success" style="margin-bottom:0;">
+  <a href="{% url 'crm:contact_list' %}" style="font-size:25px; color:white;">{{ contacts.0|to_class_name }}</a>
+</div>
+<div class="list-group">
+  {% for contact in contacts %}
+  <a href="{% url 'crm:contact_detail' contact.id %}" class="list-group-item" style="font-size:18px;">{{ contact }}</a>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if opps %}
+<div class="alert alert-warning" style="margin-bottom:0;">
+  <a href="{% url 'crm:opportunity_list' %}" style="font-size:25px; color:white;">{{ opps.0|to_class_name }}</a>
+</div>
+<div class="list-group">
+    {% for opp in opps %}
+  <a href="{% url 'crm:opportunity_detail' opp.id %}" class="list-group-item" style="font-size:18px;">{{ opp }}</a>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if companies %}
+<div class="alert alert-info" style="margin-bottom:0;">
+  <a href="{% url 'crm:company_list' %}" style="font-size:25px; color:white;">{{ companies.0|to_class_name }}</a>
+</div>
+<div class="list-group">
+  {% for company in companies %}
+  <a href="{% url 'crm:company_detail' company.id %}" class="list-group-item" style="font-size:18px;">{{ company }}</a>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}
