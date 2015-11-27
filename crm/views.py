@@ -1,13 +1,40 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
+from django.template import RequestContext
 from django.views.generic import FormView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.models import User
 from django.db.models import Count
 import datetime
+from itertools import chain
 
 from viewsets import ModelViewSet
 from .models import Stage, Company, Contact, Campaign, Opportunity, Reminder, Report, CallLog, OpportunityStage
+
+def search(request):
+    if request.method == 'GET':
+        if request.GET.get('q'):
+            contact_results = []
+            opp_results =  []
+            company_results =  []
+            search_words = "%s" % (request.GET.get('q'))
+            search_word_list = search_words.split(' ')
+            for search_word in search_word_list:
+                print search_word
+                contact_firstname = Contact.objects.filter(first_name__icontains = search_word)
+                contact_lastname = Contact.objects.filter(last_name__icontains = search_word)
+                contact_company = Contact.objects.filter(company__name__icontains = search_word)
+                opp_firstname = Opportunity.objects.filter(contact__first_name__icontains = search_word)
+                opp_lastname = Opportunity.objects.filter(contact__last_name__icontains = search_word)
+                opp_stage = Opportunity.objects.filter(stage__name__icontains = search_word)
+                company = Company.objects.filter(name__icontains = search_word)
+                contact_results = contact_results + list(contact_firstname) + list(contact_lastname) + list(contact_company)
+                opp_results = opp_results + list(opp_firstname) + list(opp_lastname) + list(opp_stage)
+                company_results = company_results + list(company)
+
+            return render_to_response('crm/search_results.html', {'search':search_words, 'contacts': contact_results, 'opps': opp_results, 'companies': company_results}, context_instance=RequestContext(request))
+
+    return render_to_response('crm/search_results.html', context_instance=RequestContext(request))
 
 class Dashboard(ListView):
     model = OpportunityStage

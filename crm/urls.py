@@ -8,6 +8,7 @@ from .models import Stage, Company, Contact, Campaign, Opportunity, Reminder, Re
 
 urlpatterns = [
     url(r'^$', login_required(views.Dashboard.as_view()), name="dashboard"),
+    url(r'^search/$', login_required(views.search), name="search"),
 
     url(r'^calllogs/$', login_required(views.CallLogList.as_view()), name="calllog_list"),
     url(r'^calllogs/(?P<pk>\d+)/$', login_required(views.CallLogDetail.as_view()), name="calllog_detail"),

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load l10n %}
+{% load humanize %}
 {% block title %}CRM Dashboard{% endblock %}
 {% block extrascripts %}
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -88,9 +88,7 @@
                     <tr>
                         <td><a href="{% url 'crm:opportunity_detail' opp.opportunity.id %}" class="text-info">{{ opp.opportunity.company }}</a></td>
                         <td>{{ opp.stage }}</td>
-                        {% localize on %}
-                        <td>${{ opp.opportunity.value|localize }}</td>
-                        {% endlocalize %}
+                        <td>${{ opp.opportunity.value|intcomma }}</td>
                         <td>{{ opp.time_stamp|date:"j M Y" }}</td>
                     </tr>
                     {% endfor %}
