@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 
 db.sqlite3
+.venv
+config.init
+config.ini
+uwsgi_params
 
 # C extensions
 *.DS_Store
