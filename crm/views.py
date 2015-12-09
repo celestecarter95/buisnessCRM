@@ -27,9 +27,10 @@ def search(request):
                 opp_firstname = Opportunity.objects.filter(contact__first_name__icontains = search_word)
                 opp_lastname = Opportunity.objects.filter(contact__last_name__icontains = search_word)
                 opp_stage = Opportunity.objects.filter(stage__name__icontains = search_word)
+                opp_company = Opportunity.objects.filter(company__name__icontains = search_word)
                 company = Company.objects.filter(name__icontains = search_word)
                 contact_results = contact_results + list(contact_firstname) + list(contact_lastname) + list(contact_company)
-                opp_results = opp_results + list(opp_firstname) + list(opp_lastname) + list(opp_stage)
+                opp_results = opp_results + list(opp_firstname) + list(opp_lastname) + list(opp_stage) + list(opp_company)
                 company_results = company_results + list(company)
 
             return render_to_response('crm/search_results.html', {'search':search_words, 'contacts': contact_results, 'opps': opp_results, 'companies': company_results}, context_instance=RequestContext(request))
@@ -44,10 +45,11 @@ class Dashboard(ListView):
         context = super(Dashboard, self).get_context_data(**kwargs)
 
         #Adding OpportunityStages to the templates' context
-        context["opportunity_stages"] = OpportunityStage.objects.all().order_by('-time_stamp')
-        context["reminders"] = Reminder.objects.all().order_by('-date')[:6]
-        context["opp_users"] = User.objects.annotate(num_opp=Count('opportunitystage'))
-        context["stage_by_opp"] = Stage.objects.annotate(opp_count = Count('opportunity'))
+        context["reminders"] = Reminder.objects.all().order_by('-date')[:5]
+        context["opportunity_stages"] = OpportunityStage.objects.all().order_by('-time_stamp')[:5]
+        context["stage_by_opp"] = Stage.objects.order_by('-order').annotate(opp_count = Count('opportunity'))
+        context["opp_users"] = User.objects.filter(opportunitystage__stage__value = 100).annotate(num_opp=Count('opportunitystage'))[:5]
+
 
         return context
 
@@ -145,13 +147,11 @@ class UpdateOpportunity(UpdateView):
     def form_valid(self, form):
         opportunity = form.save(commit=False)
 
-        #Checks to make sure the stage being moved to is a the next stage and not a previous stage
-        if opportunity.stage.value > self.get_object().stage.value:
-            opportunity_stage = OpportunityStage()
-            opportunity_stage.opportunity = Opportunity.objects.all().filter(id = self.get_object().pk)[0]
-            opportunity_stage.stage = form.cleaned_data['stage']
-            opportunity_stage.user = self.request.user
-            opportunity_stage.save()
+        opportunity_stage = OpportunityStage()
+        opportunity_stage.opportunity = Opportunity.objects.all().filter(id = self.get_object().pk)[0]
+        opportunity_stage.stage = form.cleaned_data['stage']
+        opportunity_stage.user = self.request.user
+        opportunity_stage.save()
 
         opportunity.save()
 
