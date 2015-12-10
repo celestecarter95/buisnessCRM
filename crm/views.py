@@ -126,7 +126,7 @@ class OpportunityList(ListView):
         context = super(OpportunityList, self).get_context_data(**kwargs)
 
         #Adding OpportunityStages to the templates' context
-        context["opportunity_stages"] = OpportunityStage.objects.all()
+        context["opportunity_stages"] = OpportunityStage.objects.order_by('-time_stamp')
 
         return context
 
@@ -147,11 +147,12 @@ class UpdateOpportunity(UpdateView):
     def form_valid(self, form):
         opportunity = form.save(commit=False)
 
-        opportunity_stage = OpportunityStage()
-        opportunity_stage.opportunity = Opportunity.objects.all().filter(id = self.get_object().pk)[0]
-        opportunity_stage.stage = form.cleaned_data['stage']
-        opportunity_stage.user = self.request.user
-        opportunity_stage.save()
+	if opportunity.stage.value != self.get_object().stage.value:
+		opportunity_stage = OpportunityStage()
+		opportunity_stage.opportunity = opportunity
+		opportunity_stage.stage = form.cleaned_data['stage']
+		opportunity_stage.user = self.request.user
+		opportunity_stage.save()
 
         opportunity.save()
 
